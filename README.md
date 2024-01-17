@@ -37,10 +37,10 @@ This project aims to target the following:
   - Once the basic setup and installation of the gems, redis and postgres is done, follow the below steps
   - Generate some dummy locations inside the Location table, to do that:
     - Open the rails console - 'rails c'
-      > Location.connection - to connect to DB
-      > cities= [{ name: 'Delhi'}, { name: 'Mumbai'}, { name: 'Pune'}, { name: 'Punjab'}, { name: 'Lucknow'}, { name: 'Kanpur'}, { name: 'Bhopal'}, { name: 'Kochi'}, { name: 'Bangalore'}, { name: 'Vadodara'}, { name: 'Indore'}, { name: 'Kolkata'}, { name: 'Chennai'}, { name: 'Hyderabad'}, { name: 'Ahmedabad'}, { name: 'Jaipur'}, { name: 'Visakhapatnam'}, { name: 'Jaipur'}, { name: 'Nagpur'}, { name: 'Agra'}  ] - 20 cities note the names should be valid cities
-      > **Location.create(cities)**
-   - Exit the console
+      - >> Location.connection - to connect to DB
+      - >> cities= [{ name: 'Delhi'}, { name: 'Mumbai'}, { name: 'Pune'}, { name: 'Punjab'}, { name: 'Lucknow'}, { name: 'Kanpur'}, { name: 'Bhopal'}, { name: 'Kochi'}, { name: 'Bangalore'}, { name: 'Vadodara'}, { name: 'Indore'}, { name: 'Kolkata'}, { name: 'Chennai'}, { name: 'Hyderabad'}, { name: 'Ahmedabad'}, { name: 'Jaipur'}, { name: 'Visakhapatnam'}, { name: 'Jaipur'}, { name: 'Nagpur'}, { name: 'Agra'}  ] - 20 cities note the names should be valid cities
+      - >> **Location.create(cities)**
+   - Exit the console using >> exit
    - Open 3 seperate terminals for 3 servers Rails, Redis and Sidekiq
    - Rails Server : rails s (in terminal 1)
    - Redis : redis-server (in terminal 2)

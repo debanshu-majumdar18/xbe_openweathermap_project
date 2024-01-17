@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+</head>
+<body>
+<div class="text-center">
+  <h2>Air Quality of <%= Location.count %> cities of India:</h2>
+</div>
+
+<div class="container">
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Sr. No</th>
+          <th>Name</th>
+          <th>Latitude</th>
+          <th>Longitude</th>
+          <th>State</th>
+          <th>Pollution Concentrations</th>
+          <th>Monthly Avg. AQI</th>
+          <th>Quality</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @locations.each_with_index do |l, idx| %>
+        <tr>
+          <td><%= idx + 1 %></td>
+          <td><%= l.name %></td>
+          <td><%= l.latitude.round(4) %></td>
+          <td><%= l.longitude.round(4) %></td>
+          <td><%= l.state %></td>
+          <td><a href="<%= location_path(l.id) %>">show</a></td>
+          <td><%= l.get_avg_aqi.round(2) %></td>
+          <td class="<%= l.get_status(l.get_avg_aqi)[0] %>"><%= l.get_status(l.get_avg_aqi)[1] %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>  
+</div>
+</body>
+
+
+</html>

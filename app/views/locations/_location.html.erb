@@ -1,0 +1,97 @@
+<div class="container" id="<%= dom_id location %>">
+   <p>
+    <strong>Name:</strong>
+    <%= "#{location.name} (#{location.state})" %>
+  </p>
+  <p>
+    <strong>Latitude:</strong>
+    <%= location.latitude %>
+  </p>
+  <p>
+    <strong>Longitude:</strong>
+    <%= location.longitude %>
+  </p>
+  <p>
+    <ul class="nav nav-tabs">
+    <% if location.pollution_concentration %>
+      <li class="active"><a data-toggle="tab" href="#home"><strong>Pollution Concentrations history: <%= location.pollution_concentration.count %></strong></a></li>
+    <% end %>
+
+    <% if location.historic_data %>
+      <li><a data-toggle="tab" href="#menu1"><strong>Monthly Historical Air Quality: <%= location.historic_data ? location.historic_data.count : 0 %></strong></a></li>
+    <% end %>
+  </ul>
+    
+    <div class="tab-content">
+      <div id="home" class="tab-pane fade in active">
+        <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>CO</th>
+            <th>SO2</th>
+            <th>O3</th>
+            <th>PM25</th>
+            <th>PM10</th>
+            <th>NO2</th>
+            <th>AQI</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% if location.pollution_concentration %>
+          <% location.pollution_concentration.each_with_index do |p, idx| %>
+            <tr>
+              <td><%= p['co'] %></td>
+              <td><%= p['so2'] %></td>
+              <td><%= p['o3'] %></td>
+              <td><%= p['pm25'] %></td>
+              <td><%= p['pm10'] %></td>
+              <td><%= p['no2'] %></td>
+              <td><%= p['aqi'] %></td>
+              <td><%= p['date'] %></td>
+            </tr>
+          <% end %>
+          </tbody>
+          </table>
+          <p>
+          <strong>Average AQI:</strong>
+          <%= location.get_avg_aqi(false) %>
+        <% end %>
+        </p>
+      </div>
+      
+       <div id="menu1" class="tab-pane fade">
+         <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>CO</th>
+              <th>SO2</th>
+              <th>O3</th>
+              <th>PM25</th>
+              <th>PM10</th>
+              <th>NO2</th>
+              <th>AQI</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+          <% if location.historic_data %>
+            <% location.historic_data.each_with_index do |p, idx| %>
+            <tr>
+              <td><%= p['co'] %></td>
+              <td><%= p['so2'] %></td>
+              <td><%= p['o3'] %></td>
+              <td><%= p['pm25'] %></td>
+              <td><%= p['pm10'] %></td>
+              <td><%= p['no2'] %></td>
+              <td><%= p['aqi'] %></td>
+              <td><%= p['date'] %></td>
+            </tr>
+          <% end %>
+        <% end %>
+        </tbody>
+        </table>
+       </div>
+    </div>
+
+</div>

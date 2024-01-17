@@ -23,6 +23,10 @@ This project aims to target the following:
   - Ubuntu 20.04 +
   - Ruby 3.0 +
 
+### How to Clone the repo
+   - Fork the Repository
+   - Clone your fork - git clone https://github.com/[your_username]/repository.git
+
 ### Getting Started
   - Clone the git repo
   - Once ruby and rails is setup on your system, we will also need redis

@@ -1,8 +1,8 @@
 :scheduler:
   :schedule:
       aqi_job:
-        every: 10s
+        every: 30s
         class: FetchAirQualityDataJob
       historic_aqi_job:
-        every: 30s
+        every: 50s
         class: FetchHistoricAirQualityDataJob

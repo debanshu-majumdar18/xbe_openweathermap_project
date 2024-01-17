@@ -4,13 +4,17 @@ This project aims to target the following:
 1. Ruby on Rails application using PostgreSQL as the database.
 2. Maintaining a list of 20 locations across India along with their location info - latitude, longitude.
 3. Utilizing the OpenWeatherMap Air Pollution API to fetch current air pollution data for the locations.
-4. Creating an importer to parse and save the fetched data into the database, including air quality index (AQI), pollutant concentrations, and location details.
-5. Implementing a scheduled task to run the importer every 1 hour, using Active Job or a gem like Sidekiq. For demonstration purposes, you can schedule it every 30 seconds.
-6. Use RSpec to write unit tests for the application. You can utilize the VCR gem to record API requests for testing, avoiding redundant API calls.
+4. Creatinging an importer to parse and save the fetched data into the database, including air quality index (AQI), pollutant concentrations, and location details.
+5. Implementinging a scheduled task to run the importer every 1 hour used Sidekiq
+6. Use RSpec to write unit tests for the application - Used minitest
 7. Write queries to:
    a. Calculate the average air quality index per month per location.
    b. Calculate the average air quality index per location.
    c. Calculate the average air quality index per state.
+8. Three apis from Openweathermap has been used
+   1. OpenWeatherMap Air Pollution API https://openweathermap.org/api/air-pollution
+   2. OpenWeatherMap Air Pollution History API https://openweathermap.org/api/air-pollution#history
+   3. OpenWeatherMap Geocoding API https://openweathermap.org/api/geocoding-api
    
 * Ruby version - ruby 3.0.2p107
 * Rails version - rails 7.1.2
@@ -52,9 +56,10 @@ This project aims to target the following:
    - **Note**- there are 2 tasks that are timed for 30seconds and 50seconds, feel free to change the time intervals using CRON * /30 * * * * * or time notation e.g. 1m or 2h
    - This sidekiq server will keep running in the background and process 2 tasks every 30 and 50 seconds
    - **Note** - Only 1000 api calls are allowed in total
+   - To run the unit tests - cd into the project folder and run **bin/rails test test/models/location_test.rb**
 
 
   ### Final notes
-    - Open - http://localhost:3000/locations on a browser
+    - Go to http://localhost:3000/locations on a browser
     - There are 3 important pages /locations, locations/state/aqi and location/show
     - The simple UI will help you guide through the application

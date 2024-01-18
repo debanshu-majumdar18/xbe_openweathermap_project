@@ -54,14 +54,12 @@ This project aims to target the following:
    - Redis : redis-server (in terminal 2)
    - Sidekiq: **bundle exec sidekiq -C config/sidekiq.yml** (in terminal 3), before running this command please Run **rake populate:location_info**
 
-   ### Tasks to run
+   ### About the tasks and background jobs
    - Now we need to run a rake task to populate the GEOCODING data for the cities i.e Long, Latit, State, Country
-   - Once the process completes successfully, we need to start our background job scheduler - 'SideKiq'
    - **Note**- there are 2 tasks that are timed for 30seconds and 50seconds, feel free to change the time intervals using CRON * /30 * * * * * or time notation e.g. 1m or 2h
    - This sidekiq server will keep running in the background and process 2 tasks every 30 and 50 seconds
    - **Note** - Only 1000 api calls are allowed in total
    - To run the unit tests - cd into the project folder and run **bin/rails test test/models/location_test.rb**
-
 
   ### Final notes
     - Go to http://localhost:3000/locations on a browser

@@ -42,26 +42,29 @@ This project aims to target the following:
   - Run rake **db:migrate** to initialize the database for the RoR application
 
   ### Runnig the application
-  - Once the basic setup and installation of the gems, redis and postgres is done, follow the below steps
-  - Generate some dummy locations inside the Location table, to do that (this is made manual to demonstrate control over the city choices):
-    - Open the rails console - 'rails c'
-      - >> Location.connection - to connect to DB
-      - >> cities= [{ name: 'Delhi'}, { name: 'Mumbai'}, { name: 'Pune'}, { name: 'Punjab'}, { name: 'Lucknow'}, { name: 'Kanpur'}, { name: 'Bhopal'}, { name: 'Kochi'}, { name: 'Bangalore'}, { name: 'Vadodara'}, { name: 'Indore'}, { name: 'Kolkata'}, { name: 'Chennai'}, { name: 'Hyderabad'}, { name: 'Ahmedabad'}, { name: 'Jaipur'}, { name: 'Visakhapatnam'}, { name: 'Jaipur'}, { name: 'Nagpur'}, { name: 'Agra'}  ] - 20 cities note the names should be valid cities
-      - >> **Location.create(cities)**
-   - Exit the console using >> exit
+   - Once the basic setup and installation of the gems, redis and postgres is done, follow the below steps
+   - run **rake db:seed** to populate the databse with some dummy cities, the seeds code use the GEOCODING API
    - Open 3 seperate terminals for 3 servers Rails, Redis and Sidekiq
    - Rails Server : rails s (in terminal 1)
    - Redis : redis-server (in terminal 2)
-   - Sidekiq: **bundle exec sidekiq -C config/sidekiq.yml** (in terminal 3), before running this command please Run **rake populate:location_info**
+   - Sidekiq: **bundle exec sidekiq -C config/sidekiq.yml** (in terminal 3)
 
    ### About the tasks and background jobs
-   - Now we need to run a rake task to populate the GEOCODING data for the cities i.e Long, Latit, State, Country
-   - **Note**- there are 2 tasks that are timed for 30seconds and 50seconds, feel free to change the time intervals using CRON * /30 * * * * * or time notation e.g. 1m or 2h
-   - This sidekiq server will keep running in the background and process 2 tasks every 30 and 50 seconds
-   - **Note** - Only 1000 api calls are allowed in total
-   - To run the unit tests - cd into the project folder and run **bin/rails test test/models/location_test.rb**
+   - **Note**- there are 2 tasks that are timed for 30seconds and 1 hour, feel free to change the time intervals using CRON * /30 * * * * * or time notation e.g. 1m or 2h
+   - Sidekiq server will keep running in the background and process 2 tasks every 30seconds and 1 hour
+   - **Note** - Only 1000 api calls are allowed in total per day
+   - To run the unit tests - cd into the project folder and run **bundle exec rspec**
 
-  ### Final notes
+  ### Use the application on web
     - Go to http://localhost:3000/locations on a browser
-    - There are 3 important pages /locations, locations/state/aqi and location/show
     - The simple UI will help you guide through the application
+
+### About the Importers
+    - The application has 2 importer services **AirQualityImporter** and **AirQualityImporterHistoric**
+    - Both the importers use ETL style for the Openweathermap APIs (fetch, transform and save)
+    - Each importer calls their respective APIs AIR_QUALITY_API and HISTORIC_AIR_QUALITY_API
+
+### About the DB
+   - The database consits of 3 relations Location, PollutionConcentraion and HistoricDataRecords
+   - Both PollutionConcentraion and HistoricDataRecords have a one-many relation with Location indexed on location_id
+

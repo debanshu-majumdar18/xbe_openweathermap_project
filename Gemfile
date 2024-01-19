@@ -45,6 +45,8 @@ gem "bootsnap", require: false
 gem 'sidekiq', '~> 5.2.8'
 gem 'sidekiq-scheduler'
 gem 'bootstrap-sass'
+gem 'rspec-rails'
+gem 'factory_bot_rails'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
@@ -53,6 +55,7 @@ group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mswin mswin64 mingw x64_mingw ]
   gem "byebug"
+  gem 'dotenv-rails'
 end
 
 group :development do

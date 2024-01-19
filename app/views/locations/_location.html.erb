@@ -13,12 +13,12 @@
   </p>
   <p>
     <ul class="nav nav-tabs">
-    <% if location.pollution_concentration %>
-      <li class="active"><a data-toggle="tab" href="#home"><strong>Pollution Concentrations history: <%= location.pollution_concentration.count %></strong></a></li>
+    <% if @current_pollution_records %>
+      <li class="active"><a data-toggle="tab" href="#home"><strong>Pollution Concentrations history: <%= @current_pollution_records.count %></strong></a></li>
     <% end %>
 
-    <% if location.historic_data %>
-      <li><a data-toggle="tab" href="#menu1"><strong>Monthly Historical Air Quality: <%= location.historic_data ? location.historic_data.count : 0 %></strong></a></li>
+    <% if @historic_pollution_records %>
+      <li><a data-toggle="tab" href="#menu1"><strong>Monthly Historical Air Quality: <%= @historic_pollution_records.historic_air_pollution_data.count %></strong></a></li>
     <% end %>
   </ul>
     
@@ -38,24 +38,24 @@
           </tr>
         </thead>
         <tbody>
-        <% if location.pollution_concentration %>
-          <% location.pollution_concentration.each_with_index do |p, idx| %>
+        <% if @current_pollution_records %>
+          <% @current_pollution_records.each_with_index do |p, idx| %>
             <tr>
-              <td><%= p['co'] %></td>
-              <td><%= p['so2'] %></td>
-              <td><%= p['o3'] %></td>
-              <td><%= p['pm25'] %></td>
-              <td><%= p['pm10'] %></td>
-              <td><%= p['no2'] %></td>
-              <td><%= p['aqi'] %></td>
-              <td><%= p['date'] %></td>
+              <td><%= p[:co] %></td>
+              <td><%= p[:so2] %></td>
+              <td><%= p[:o3] %></td>
+              <td><%= p[:pm25] %></td>
+              <td><%= p[:pm10] %></td>
+              <td><%= p[:no2] %></td>
+              <td><%= p[:aqi] %></td>
+              <td><%= p[:created_at] %></td>
             </tr>
           <% end %>
           </tbody>
           </table>
           <p>
           <strong>Average AQI:</strong>
-          <%= location.get_avg_aqi(false) %>
+          <%= location.average_air_quality_index(PollutionConcentration.count) %>
         <% end %>
         </p>
       </div>
@@ -71,26 +71,29 @@
               <th>PM10</th>
               <th>NO2</th>
               <th>AQI</th>
-              <th>Date</th>
             </tr>
           </thead>
           <tbody>
-          <% if location.historic_data %>
-            <% location.historic_data.each_with_index do |p, idx| %>
-            <tr>
-              <td><%= p['co'] %></td>
-              <td><%= p['so2'] %></td>
-              <td><%= p['o3'] %></td>
-              <td><%= p['pm25'] %></td>
-              <td><%= p['pm10'] %></td>
-              <td><%= p['no2'] %></td>
-              <td><%= p['aqi'] %></td>
-              <td><%= p['date'] %></td>
-            </tr>
-          <% end %>
-        <% end %>
+          <% if @historic_pollution_records %>
+            <% @historic_pollution_records.historic_air_pollution_data.each do |p| %>
+              <tr>
+                <td><%= p['co'] %></td>
+                <td><%= p['so2'] %></td>
+                <td><%= p['o3'] %></td>
+                <td><%= p['pm25'] %></td>
+                <td><%= p['pm10'] %></td>
+                <td><%= p['no2'] %></td>
+                <td><%= p['aqi'] %></td>
+              </tr>
+            <% end %>
+          
         </tbody>
         </table>
+          <p>
+          <strong>Extracted on:</strong>
+          <%= @historic_pollution_records.created_at %>
+          <% end %>
+        </p>
        </div>
     </div>
 

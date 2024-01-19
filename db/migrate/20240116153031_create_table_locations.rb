@@ -6,8 +6,6 @@ class CreateTableLocations < ActiveRecord::Migration[7.1]
       t.string :state
       t.float :latitude
       t.float :longitude
-      t.jsonb :pollution_concentration
-      t.jsonb :historic_data
       t.timestamps
     end
   end

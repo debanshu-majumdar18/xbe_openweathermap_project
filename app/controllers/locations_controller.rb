@@ -8,6 +8,9 @@ class LocationsController < ApplicationController
 
   # GET /locations/1 or /locations/1.json
   def show
+    @current_pollution_records = @location.pollution_concentrations
+
+    @historic_pollution_records = @location.historic_data_record.order(created_at: :desc).first
   end
 
   # GET /locations/new
@@ -20,7 +23,7 @@ class LocationsController < ApplicationController
   end
 
   def state_wise
-    @states_aqi =Location.get_avg_aqi_for_state
+    @states_aqi =Location.average_aqi_by_state
   end
 
   # POST /locations or /locations.json

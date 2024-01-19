@@ -1,9 +1,12 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+# The data can then be loaded with the rake db:seed
+
+
+#cities_in_india = ['Mumbai', 'Delhi', 'Bangalore', 'Kolkata', 'Chennai', 'Hyderabad', 'Ahmedabad', 'Pune', 'Surat', 'Jaipur', 'Lucknow', 'Kanpur', 'Nagpur', 'Indore', 'Thane', 'Bhopal', 'Visakhapatnam', 'Patna', 'Vadodara', 'Ghaziabad']
+cities_in_india = ['Delhi', 'Mumbai']
+puts "Creating cities... \n"
+cities_in_india.each do |city_name|
+  geocoding_data = OpenWeatherMap.fetch_geocoding_data(city_name)
+  Location.find_or_create_by(name: city_name, latitude: geocoding_data[:latitude], longitude: geocoding_data[:longitude], 
+  state: geocoding_data[:state], country: geocoding_data[:country])
+end
+

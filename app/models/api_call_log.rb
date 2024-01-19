@@ -1,0 +1,3 @@
+class ApiCallLog < ApplicationRecord
+  
+end

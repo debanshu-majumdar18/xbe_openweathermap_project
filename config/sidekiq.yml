@@ -2,7 +2,7 @@
   :schedule:
       aqi_job:
         every: 30s
-        class: FetchAirQualityDataJob
+        class: AirQualityImporter
       historic_aqi_job:
-        every: 50s
-        class: FetchHistoricAirQualityDataJob
+        every: 1h
+        class: AirQualityImporterHistoric

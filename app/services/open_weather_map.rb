@@ -11,23 +11,31 @@ class OpenWeatherMap
   def self.fetch_geocoding_data(city_name)
     response = call_api_and_log(GEOCODING_DATA_URI, 'geo', {q: city_name, limit: 1}, 'GET')
 
-    return nil unless response.success?
-    parsed_response = JSON.parse(response.body)
-
-    {
-     state: parsed_response[0]['state'], 
-     country: parsed_response[0]['country'],
-     latitude:  parsed_response[0]['lat'],
-     longitude:  parsed_response[0]['lon']
-    }
+    if response.success?
+      parsed_response = JSON.parse(response.body)
+      return   {
+        state: parsed_response[0]['state'], 
+        country: parsed_response[0]['country'],
+        latitude:  parsed_response[0]['lat'],
+        longitude:  parsed_response[0]['lon']
+       }
+    else
+      Rails.logger.error("Failed to fetch geocoding. HTTP Status: #{response.code}, Body: #{response.body}")
+      return nil
+    end
   end
 
   def self.fetch_air_quality(location)
     lon, lat = location.longitude, location.latitude
     response = call_api_and_log(AIR_POLLUTION_URI, 'curr_pollution', {lat: lat, lon: lon}, 'GET')
 
-    return nil unless response.success?
-    parsed_response = JSON.parse(response.body)
+    if response.success?
+      parsed_response = JSON.parse(response.body)
+      return parsed_response
+    else
+      Rails.logger.error("Failed to fetch air quality. HTTP Status: #{response.code}, Body: #{response.body}")
+      return nil
+    end
   end
 
   def self.fetch_historical_data(location, period_in_days = 365)
@@ -35,8 +43,13 @@ class OpenWeatherMap
     start_time, end_time = (Time.now-period_in_days.days).utc.to_i, Time.now.utc.to_i 
     response = call_api_and_log(HISTORICAL_DATA_URI, 'historic_pollution', {lat: lat, lon: lon, start: start_time, end: end_time}, 'GET')
 
-    return nil unless response.success?
-    parsed_response = JSON.parse(response.body)
+    if response.success?
+      parsed_response = JSON.parse(response.body)
+      return parsed_response
+    else
+      Rails.logger.error("Failed to fetch historic air quality. HTTP Status: #{response.code}, Body: #{response.body}")
+      return nil
+    end
   end
 
   private

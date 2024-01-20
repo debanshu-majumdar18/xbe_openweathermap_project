@@ -35,7 +35,7 @@
           <td><%= l.state %></td>
           <td><a href="<%= location_path(l.id) %>">show</a></td>
           <td><%= l.average_air_quality_index.round(2) %></td>
-          <td class="<%= l.status(l.average_air_quality_index)[0] %>"><%= l.status(l.average_air_quality_index)[1] %></td>
+          <td class="<%= l.status_of(l.average_air_quality_index)[0] %>"><%= l.status_of(l.average_air_quality_index)[1] %></td>
         </tr>
       <% end %>
       </tbody>

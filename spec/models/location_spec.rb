@@ -43,7 +43,7 @@ RSpec.describe Location do
       create(:pollution_concentration, location: @location_delhi, aqi: 3)
       aqi = @location_delhi.pollution_concentrations.first.aqi
 
-      expect(@location_delhi.status(aqi).second).to eql('Moderate')
+      expect(@location_delhi.status_of(aqi).second).to eql('Moderate')
     end
   end
 

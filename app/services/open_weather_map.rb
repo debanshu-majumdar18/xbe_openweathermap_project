@@ -4,9 +4,9 @@ require "httparty"
 class OpenWeatherMap
   include HTTParty
 
-  AIR_POLLUTION_URI = 'http://api.openweathermap.org/data/2.5/air_pollution'
-  GEOCODING_DATA_URI = 'http://api.openweathermap.org/geo/1.0/direct'
-  HISTORICAL_DATA_URI = 'http://api.openweathermap.org/data/2.5/air_pollution/history'
+  AIR_POLLUTION_URI = ENV['AIR_POLLUTION_URI']
+  GEOCODING_DATA_URI = ENV['GEOCODING_DATA_URI']
+  HISTORICAL_DATA_URI = ENV['HISTORICAL_DATA_URI']
 
   def self.fetch_geocoding_data(city_name)
     response = call_api_and_log(GEOCODING_DATA_URI, 'geo', {q: city_name, limit: 1}, 'GET')

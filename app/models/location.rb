@@ -9,9 +9,9 @@ class Location < ApplicationRecord
   def average_air_quality_index(period_in_days = 30)
     PollutionConcentration
     .where(location: self)
-    .where('created_at >= ?', period_in_days.days.ago)
-    .group(:location_id)
-    .average(:aqi).values.first
+    .order(created_at: :desc)
+    .limit(period_in_days)
+    .average(:aqi)
   end
 
   def self.average_aqi_by_state

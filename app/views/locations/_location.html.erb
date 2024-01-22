@@ -55,7 +55,7 @@
           </table>
           <p>
           <strong>Average AQI:</strong>
-          <%= location.average_air_quality_index(PollutionConcentration.count) %>
+          <%= location.average_air_quality_index(@current_pollution_records.count) %>
         <% end %>
         </p>
       </div>

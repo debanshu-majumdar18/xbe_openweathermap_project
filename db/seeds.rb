@@ -13,4 +13,3 @@ cities_in_india.each do |city_name|
     state: geocoding_data[:state], country: geocoding_data[:country])
   end
 end
-
